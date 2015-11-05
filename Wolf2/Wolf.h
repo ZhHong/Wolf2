@@ -5,7 +5,7 @@
 class Wolf :public Animal
 {
 public:
-	Wolf();
+	Wolf(int id);
 	~Wolf();
 };
 #endif

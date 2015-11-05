@@ -6,7 +6,5 @@ class Rabbit:public Animal
 public:
 	Rabbit();
 	~Rabbit();
-
-	
 };
 #endif

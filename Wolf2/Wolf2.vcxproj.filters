@@ -33,6 +33,15 @@
     <ClInclude Include="Plants.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CmdInfo.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Wolf.cpp">
@@ -54,6 +63,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

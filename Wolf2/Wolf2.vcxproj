@@ -80,10 +80,13 @@
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Carrot.h" />
+    <ClInclude Include="CmdInfo.h" />
     <ClInclude Include="Feature.h" />
     <ClInclude Include="Plants.h" />
     <ClInclude Include="Rabbit.h" />
+    <ClInclude Include="Utils.h" />
     <ClInclude Include="Wolf.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animal.cpp" />
@@ -92,7 +95,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Plants.cpp" />
     <ClCompile Include="Rabbit.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Wolf.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
