@@ -4,7 +4,7 @@
 class Rabbit:public Animal
 {
 public:
-	Rabbit();
+	Rabbit(int id);
 	~Rabbit();
 };
 #endif

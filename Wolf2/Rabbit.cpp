@@ -1,8 +1,9 @@
 #include "Rabbit.h"
 
 
-Rabbit::Rabbit()
-{
+Rabbit::Rabbit(int id)
+{	
+	Rabbit::id = id;
 	Rabbit::type = 2;
 	Rabbit::state = 1;
 	Rabbit::speed = 8;

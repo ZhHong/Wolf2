@@ -9,6 +9,8 @@ public:
 	~Utils();
 	void static print(int num);
 	void static print(std::string str);
+	int static getSerNum();
+	static int bgval;
 
 };
 #endif
