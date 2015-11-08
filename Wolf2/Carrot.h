@@ -1,9 +1,10 @@
 #ifndef _CARROTH_
 #define _CARROTH_
-class Carrot
+#include "Plants.h"
+class Carrot:public Plants
 {
 public:
-	Carrot();
+	Carrot(int id);
 	~Carrot();
 };
 #endif

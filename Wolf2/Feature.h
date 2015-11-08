@@ -27,6 +27,7 @@ public:
 	void mainloop();
 
 	void move();
+	//0 1
 	void run();
 	void eat();
 	void callHelp();

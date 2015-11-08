@@ -3,7 +3,10 @@
 #include <time.h>
 #include <math.h>
 #include "Utils.h"
+#include <thread>
+#include "DataManager.h"
 
+#define random(x) (rand()%x)
 Feature::Feature()
 {
 }
@@ -40,6 +43,25 @@ void Feature::mainloop(){
 			Feature::move();
 			Feature::checkMsgBox();
 		}
+		//sleep thread 
+		std::chrono::milliseconds timespan(10);
+		std::this_thread::sleep_for(timespan);
+		//second ways
+		//#ifdef _WIN32
+		//#include <windows.h>
+		//
+		//		void sleep(unsigned milliseconds)
+		//		{
+		//			Sleep(milliseconds);
+		//		}
+		//#else
+		//#include <unistd.h>
+		//
+		//		void sleep(unsigned milliseconds)
+		//		{
+		//			usleep(milliseconds * 1000); // takes microseconds
+		//		}
+		//#endif
 	}
 }
 
@@ -48,20 +70,33 @@ void Feature::move(){
 	Feature::x += int(cos(Feature::angel));
 	Feature::y += int(sin(Feature::angel));
 	Utils::print("featue type <" + std::to_string(Feature::type) + "> feature id <" + std::to_string(Feature::id) + "> move------------------------");
+	//std::vector<std::string> vec;
+	//vec.push_back("项佳丽是猪");
+	//vec.push_back("项佳丽是狗");
+	//vec.push_back("项佳丽是1------------");
+	//vec.push_back("项佳丽是2------------");
+	//vec.push_back("项佳丽是3------------");
+	//vec.push_back("项佳丽是4------------");
+	//srand((int)time(0));
+	//Utils::print(vec[int(random(5))]);
 }
 
 void Feature::run(){
-
+	Feature::x += 2*int(cos(Feature::angel));
+	Feature::y += 2*int(sin(Feature::angel));
 }
 
 void Feature::eat(){
-
+	auto dataManager = DataManager::getInstance();
+	dataManager->featureEat(this);
 }
 
 void Feature::callHelp(){
-
+	auto dataManager=DataManager::getInstance();
+	dataManager->featureCallHelp(this);
 }
 
 void Feature::callTogether(){
-
+	auto dataManager = DataManager::getInstance();
+	dataManager->featureCallTogether(this);
 }

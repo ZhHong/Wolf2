@@ -26,16 +26,16 @@ int main(){
 	//	auto rb = Rabbit(Utils::getSerNum());
 	//	//wolfmap.insert(std::pair<int, Wolf>(wf.id, wf));
 	//	//rabbitmap.insert(std::pair<int, Rabbit>(rb.id, rb));
-	//	//featuremap.insert(std::pair<int, Feature>(wf.id, wf));
-	//	//featuremap.insert(std::pair<int, Feature>(rb.id, rb));
+	//	featuremap.insert(std::pair<int, Feature>(wf.id, wf));
+	//	featuremap.insert(std::pair<int, Feature>(rb.id, rb));
 	//	dataManager->addFeature(wf.id, wf);
 	//	dataManager->addFeature(rb.id, rb);
 	//}
-	//std::map<int, Wolf>::iterator it;
-	//for (it = wolfmap.begin(); it != wolfmap.end(); ++it){
-	//	std::thread td1(std::bind(&Wolf::mainloop, &it->second));
-	//	td1.detach();
-	//}
+	////std::map<int, Wolf>::iterator it;
+	////for (it = wolfmap.begin(); it != wolfmap.end(); ++it){
+	////	std::thread td1(std::bind(&Wolf::mainloop, &it->second));
+	////	td1.detach();
+	////}
 	//auto it = featuremap.begin();
 	//for (it; it != featuremap.end(); it++){
 	//	std::thread td1(std::bind(&Feature::mainloop, &it->second));

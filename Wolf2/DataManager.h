@@ -6,6 +6,7 @@
 #include "Animal.h"
 #include "Wolf.h"
 #include "Rabbit.h"
+#include "Carrot.h"
 
 
 class DataManager
@@ -19,13 +20,15 @@ public:
 	static DataManager * getInstance();
 	void initFeatrue();
 
-
+	void featureCallHelp(Feature *);
+	void featureCallTogether(Feature *);
+	void featureEat(Feature *);
 private:
 	DataManager();
 	~DataManager();
 	static DataManager * instance;
 
-	std::map<int, Feature> featuremap;
+	static std::map<int, Feature> featuremap;
 
 
 };
