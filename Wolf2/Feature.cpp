@@ -71,12 +71,6 @@ void Feature::move(){
 	Feature::y += int(sin(Feature::angel));
 	Utils::print("featue type <" + std::to_string(Feature::type) + "> feature id <" + std::to_string(Feature::id) + "> move------------------------");
 	//std::vector<std::string> vec;
-	//vec.push_back("项佳丽是猪");
-	//vec.push_back("项佳丽是狗");
-	//vec.push_back("项佳丽是1------------");
-	//vec.push_back("项佳丽是2------------");
-	//vec.push_back("项佳丽是3------------");
-	//vec.push_back("项佳丽是4------------");
 	//srand((int)time(0));
 	//Utils::print(vec[int(random(5))]);
 }

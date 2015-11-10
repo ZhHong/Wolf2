@@ -6,8 +6,22 @@
 #include "Wolf.h"
 #include "Rabbit.h"
 #include "Utils.h"
+#include <GL\glut.h>
 
-int main(){
+//called to draw scene
+void RenderScene(void){
+	//clear the window with current clearing color
+	glClear(GL_COLOR_BUFFER_BIT);
+	//flush drawing commands
+	glFlush();
+}
+
+//set up the rendering state
+void SetupRC(void){
+	glClearColor(0.0f,0.0f,1.0f,1.0f);
+}
+
+int main(int argc,char * argv[]){
 	auto dataManager = DataManager::getInstance();
 
 
@@ -41,6 +55,12 @@ int main(){
 	//	std::thread td1(std::bind(&Feature::mainloop, &it->second));
 	//	td1.detach();
 	//}
-
-	system("pause");
+	glutInit(&argc,argv);
+	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGBA);
+	glutCreateWindow("Wolf2");
+	glutDisplayFunc(RenderScene);
+	SetupRC();
+	glutMainLoop();
+	//system("pause");
+	return 0;
 }
