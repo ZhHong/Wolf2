@@ -5,6 +5,8 @@
 
 DataManager* DataManager::instance = nullptr;
 std::map<int, Feature> DataManager::featuremap = std::map<int, Feature>();
+std::vector<std::vector<int>> DataManager::loainfo = std::vector<std::vector<int>>();
+
 
 DataManager * DataManager::getInstance(){
 	if (DataManager::instance = nullptr){
@@ -83,6 +85,8 @@ std::vector<std::vector<int>> DataManager::getFeatureDataVecByType(int type){
 	//clear temp data
 	DataManager::loainfo.clear();
 	//[[id,type,x1,y1,x2,y2,speed,angel]]--[-1,1,1,-1] cross line (x1,y1),(x2,y2)
+	Utils::print("datamanager map size====================");
+	Utils::print(DataManager::instance->featuremap.size());
 	auto it = DataManager::instance->featuremap.begin();
 	std::vector<int> temp;
 	while (it != DataManager::instance->featuremap.end()){
@@ -96,7 +100,7 @@ std::vector<std::vector<int>> DataManager::getFeatureDataVecByType(int type){
 		temp.push_back(f.x + Utils::sqr_l / 2);
 		temp.push_back(f.y - Utils::sqr_l / 1);
 		DataManager::loainfo.push_back(temp);
-		++it;
+		it++;
 	}
 	return loainfo;
 }

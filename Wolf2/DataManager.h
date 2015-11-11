@@ -32,7 +32,7 @@ private:
 
 	static std::map<int, Feature> featuremap;
 
-	std::vector<std::vector<int>> loainfo;
+	static std::vector<std::vector<int>> loainfo;
 
 };
 #endif

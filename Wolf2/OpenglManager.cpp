@@ -43,13 +43,16 @@ void RenderScene(void){
 	//set current drawing color to red
 	glColor3f(1.0f, 0.0f, 0.0f);
 	//getData(); get feature data 
-	getData(1);
+	tempvec=getData(1);
+	Utils::print("===================lenth of tempvec================");
+	Utils::print(tempvec.size());
 	auto it = tempvec.begin();
 	while (it != tempvec.end())
 	{
 		//draw a filled rectangle with current color
 		//glRectf(-Utils::sqr_l, Utils::sqr_l, Utils::sqr_l, -Utils::sqr_l);
 		glRectf(-1.0f,1.0f,1.0f,-1.0f);
+		it++;
 	}
 	//flush drawing commands
 	glFlush();

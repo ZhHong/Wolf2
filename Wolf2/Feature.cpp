@@ -69,7 +69,7 @@ void Feature::mainloop(){
 void Feature::move(){
 	Feature::x += int(cos(Feature::angel));
 	Feature::y += int(sin(Feature::angel));
-	Utils::print("featue type <" + std::to_string(Feature::type) + "> feature id <" + std::to_string(Feature::id) + "> move------------------------");
+	//Utils::print("featue type <" + std::to_string(Feature::type) + "> feature id <" + std::to_string(Feature::id) + "> move------------------------");
 	//std::vector<std::string> vec;
 	//srand((int)time(0));
 	//Utils::print(vec[int(random(5))]);
