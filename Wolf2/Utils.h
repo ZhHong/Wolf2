@@ -11,6 +11,9 @@ public:
 	void static print(std::string str);
 	int static getSerNum();
 	static int bgval;
+	static float sqr_l;
+	static float wind_w;
+	static float wind_h;
 
 };
 #endif

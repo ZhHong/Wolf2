@@ -2,6 +2,7 @@
 #define _DATAMANAGERH_
 
 #include<map>
+#include<vector>
 #include "Feature.h"
 #include "Animal.h"
 #include "Wolf.h"
@@ -23,6 +24,7 @@ public:
 	void featureCallHelp(Feature *);
 	void featureCallTogether(Feature *);
 	void featureEat(Feature *);
+	std::vector<std::vector<int>>getFeatureDataVecByType(int type);
 private:
 	DataManager();
 	~DataManager();
@@ -30,6 +32,7 @@ private:
 
 	static std::map<int, Feature> featuremap;
 
+	std::vector<std::vector<int>> loainfo;
 
 };
 #endif

@@ -20,6 +20,7 @@ DataManager::DataManager()
 
 DataManager::~DataManager()
 {
+	delete DataManager::instance;
 }
 
 std::map<int, Feature>::iterator DataManager::getFeature(int id){
@@ -76,4 +77,26 @@ void DataManager::featureCallTogether(Feature *f){
 
 void DataManager::featureEat(Feature *f){
 
+}
+
+std::vector<std::vector<int>> DataManager::getFeatureDataVecByType(int type){
+	//clear temp data
+	DataManager::loainfo.clear();
+	//[[id,type,x1,y1,x2,y2,speed,angel]]--[-1,1,1,-1] cross line (x1,y1),(x2,y2)
+	auto it = DataManager::instance->featuremap.begin();
+	std::vector<int> temp;
+	while (it != DataManager::instance->featuremap.end()){
+		auto f = it->second;
+		//if (f.type == type)
+		temp.clear();
+		temp.push_back(f.id);
+		temp.push_back(f.type);
+		temp.push_back(f.x-Utils::sqr_l/2);
+		temp.push_back(f.y + Utils::sqr_l / 2);
+		temp.push_back(f.x + Utils::sqr_l / 2);
+		temp.push_back(f.y - Utils::sqr_l / 1);
+		DataManager::loainfo.push_back(temp);
+		++it;
+	}
+	return loainfo;
 }
