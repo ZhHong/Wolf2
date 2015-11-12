@@ -5,10 +5,17 @@
 #include "Utils.h"
 #include <thread>
 #include "DataManager.h"
+#include "World.h"
 
 #define random(x) (rand()%x)
 Feature::Feature()
 {
+	World* worldin = World::getInstance();
+	std::vector<int> val=worldin->getRandomPoint();
+	Feature::x = val[0];
+	Feature::y = val[1];
+	Feature::angel = val[2];
+	
 }
 
 
@@ -67,8 +74,12 @@ void Feature::mainloop(){
 
 
 void Feature::move(){
-	Feature::x += int(cos(Feature::angel));
-	Feature::y += int(sin(Feature::angel));
+	Feature::x += int(cos(Feature::angel)*Feature::speed);
+	Feature::y += int(sin(Feature::angel)*Feature::speed);
+	//todo add do not run out of window
+
+	//Utils::print(Feature::x);
+	//Utils::print(Feature::y);
 	//Utils::print("featue type <" + std::to_string(Feature::type) + "> feature id <" + std::to_string(Feature::id) + "> move------------------------");
 	//std::vector<std::string> vec;
 	//srand((int)time(0));

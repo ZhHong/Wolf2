@@ -14,7 +14,8 @@ public:
 	static float sqr_l;
 	static float wind_w;
 	static float wind_h;
-
+	static double random(int b,int e);
+	static double random();
 };
 #endif
 

@@ -14,8 +14,8 @@ class DataManager
 {
 public:
 	int proc;
-	std::map<int ,Feature>::iterator getFeature(int id);
-	void addFeature(int id ,Feature f);
+	std::map<int ,Feature*>::iterator getFeature(int id);
+	void addFeature(int id ,Feature * f);
 	void removeFeature(int id);
 
 	static DataManager * getInstance();
@@ -30,7 +30,7 @@ private:
 	~DataManager();
 	static DataManager * instance;
 
-	static std::map<int, Feature> featuremap;
+	static std::map<int, Feature*> featuremap;
 
 	static std::vector<std::vector<int>> loainfo;
 

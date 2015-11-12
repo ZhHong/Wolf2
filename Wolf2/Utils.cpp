@@ -4,7 +4,7 @@
 #define BG_VALUE 10001
 
 int Utils::bgval = 0;
-float Utils::sqr_l = 1.0f;
+float Utils::sqr_l = 2.0f;
 float Utils::wind_w = 800;
 float Utils::wind_h = 600;
 
@@ -26,6 +26,7 @@ void Utils::print(std::string str){
 	std::cout << str << std::endl;
 }
 
+
 int Utils::getSerNum(){
 	if (Utils::bgval == 0){
 		Utils::bgval = BG_VALUE;
@@ -34,4 +35,14 @@ int Utils::getSerNum(){
 		Utils::bgval += 1;
 	}
 	return Utils::bgval;
+}
+
+double Utils::random(){
+	
+	return rand();
+}
+
+double Utils::random(int b, int e){
+	
+	return (b + (e - b)*rand() / (RAND_MAX + 1.0));
 }
