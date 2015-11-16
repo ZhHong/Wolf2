@@ -47,8 +47,8 @@ void Feature::mainloop(){
 		if (Feature::current_time + 1<now){
 			Feature::current_time = now;
 			//std::cout << Animal::id <<"wait for cmd" << std::endl;
-			Feature::move();
 			Feature::checkMsgBox();
+			Feature::move();
 		}
 		//sleep thread 
 		std::chrono::milliseconds timespan(10);
@@ -74,10 +74,40 @@ void Feature::mainloop(){
 
 
 void Feature::move(){
-	Feature::x += int(cos(Feature::angel)*Feature::speed);
-	Feature::y += int(sin(Feature::angel)*Feature::speed);
-	//todo add do not run out of window
 
+	//todo add do not run out of window
+	float tempx = Feature::x + int(cos(Feature::angel)*Feature::speed);
+	float tempy = Feature::y + int(sin(Feature::angel)*Feature::speed);
+
+	//x
+	if (tempx<=0){
+		Feature::angel = 180-Feature::angel;
+	}
+	if (tempx >= Utils::wind_w){
+		Feature::angel = 180 -Feature::angel;
+	}
+	//y
+	if (tempy < 0){
+		Feature::angel =-angel;
+	}
+	if (tempy >= Utils::wind_h){
+		Feature::angel =  - angel;
+	}
+
+	Feature::x += int(cos(Feature::angel)*Feature::speed);
+	if (Feature::x<0){
+		Feature::x = 0;
+	}
+	if (Feature::x > Utils::wind_w){
+		Feature::x = Utils::wind_w;
+	}
+	Feature::y += int(sin(Feature::angel)*Feature::speed);
+	if (Feature::y<0){
+		Feature::y = 0;
+	}
+	if (Feature::y > Utils::wind_h){
+		Feature::y = Utils::wind_h;
+	}
 	//Utils::print(Feature::x);
 	//Utils::print(Feature::y);
 	//Utils::print("featue type <" + std::to_string(Feature::type) + "> feature id <" + std::to_string(Feature::id) + "> move------------------------");

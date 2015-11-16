@@ -4,7 +4,7 @@
 #define BG_VALUE 10001
 
 int Utils::bgval = 0;
-float Utils::sqr_l = 2.0f;
+float Utils::sqr_l = 5.0f;
 float Utils::wind_w = 800;
 float Utils::wind_h = 600;
 

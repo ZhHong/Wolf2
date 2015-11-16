@@ -30,8 +30,8 @@ World * World::getInstance(){
 
 //get random point of the screen
 std::vector<int> World::getRandomPoint(){
-	int x=int(Utils::random(-World::weight/8, World::weight/8));
-	int y = int(Utils::random(-World::height/8, World::height/8));
+	int x=int(Utils::random(0, World::weight));
+	int y = int(Utils::random(0, World::height));
 	int angel = int(Utils::random(0, 360));
 	std::vector<int> temp = {x,y,angel};
 	return temp;

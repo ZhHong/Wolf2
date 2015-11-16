@@ -1,3 +1,4 @@
+#include <math.h>
 #include "OpenglManager.h"
 #include "Utils.h"
 #include "DataManager.h"
@@ -33,7 +34,7 @@ int OpenglManager::initOpenglState(int argc, char * argv[]){
 	glutCreateWindow("Wolf2");
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
-	glutTimerFunc(30,TimerFunction,1);
+	glutTimerFunc(1,TimerFunction,1);
 	SetupRC();
 	glutMainLoop();
 	return 1;
@@ -47,7 +48,8 @@ void RenderScene(void){
 	//glColor3f(1.0f, 0.0f, 0.0f);
 	//getData(); get feature data 
 	tempvec=getData(1);
-	//[[id,type,x1,y1,x2,y2,speed,angel]]
+	//[[id,type,x1,y1,x2,y2,speed,angel,/add op thread id]]
+	auto datamanager = DataManager::getInstance();
 	auto it = tempvec.begin();
 	while (it != tempvec.end())
 	{
@@ -70,7 +72,21 @@ void RenderScene(void){
 		if (cc[1] == 3){
 			glColor3f(1.0f, 0.0f, 0.0f);
 		}
-		glRectf(cc[2],cc[3],cc[4],cc[5]);
+		glRectf(cc[2],cc[3],cc[2],cc[5]);
+		//opengl draw numbers===== need number like-> id(x1,y1)
+		float globel_x = (cc[2] + cc[4]) / 2;
+		float globel_y = (cc[3] + cc[5]) / 2;
+		//std::thread::id tid=datamanager->getFeatureThreadId(cc[0]);
+		//std::string threadstr="0x " + std::to_string(tid.hash());
+		//std::string needdraw = threadstr+"-"+std::to_string(cc[0]) + "-(" +std::to_string(int(globel_x))+","+std::to_string(int(globel_y))+ ")";
+		std::string needdraw = "(" + std::to_string(int(globel_x)) + "," + std::to_string(int(globel_y)) + ")";
+		int len = needdraw.length();
+		glRasterPos3f(globel_x-len/2, globel_y + Utils::sqr_l , 0);
+		for (int i = 0; i != len; i++){
+			//GLUT_BITMAP_TIMES_ROMAN_10  need 10*10 space
+			glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_10, needdraw[i]);
+		}
+
 		it++;
 	}
 	//flush drawing commands
@@ -84,10 +100,7 @@ void SetupRC(void){
 
 //called by glut when window has changed size
 void ChangeSize(GLsizei w, GLsizei h){
-	Utils::wind_w = w;
-	Utils::wind_h = h;
-	Utils::print("current window w  " + std::to_string(w));
-	Utils::print("current window h  " + std::to_string(h));
+	
 	GLfloat aspectRadio;
 	if (h == 0)
 		h == 1;
@@ -99,12 +112,15 @@ void ChangeSize(GLsizei w, GLsizei h){
 	glLoadIdentity();
 	//establish clipping volume(left,right,bottom,top,near,far)
 	//opengl center (0,0,0) is the center of the screen
-	aspectRadio = (GLfloat)w / (GLfloat)h;
+	aspectRadio = (GLfloat)w / (GLfloat)h*3/4; //4/3
 
+	//this set where you look at (xmin,xmax,ymin,ymax)
+	//todo  add new x/y for my own
 	if (w <= h)
-		glOrtho(-100.0, 100.0, -100.0 / aspectRadio, 100.0 / aspectRadio, 1.0, -1.0);
+		//glOrtho(-400.0, 400.0, -400.0 / aspectRadio, 400.0 / aspectRadio, 1.0, -1.0);
+		glOrtho(0, w, 0, h / aspectRadio, 1.0, -1.0);
 	else
-		glOrtho(-100.0*aspectRadio, 100.0*aspectRadio, -100.0, 100.0, 1.0, -1.0);
+		glOrtho(0, w*aspectRadio, 0, h, 1.0, -1.0);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
@@ -121,5 +137,5 @@ std::vector<std::vector<int>>getData(int type){
 
 void TimerFunction(int value){
 	glutPostRedisplay();
-	glutTimerFunc(33, TimerFunction, 1);
+	glutTimerFunc(1, TimerFunction, 1);
 }

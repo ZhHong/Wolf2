@@ -1,11 +1,13 @@
 #include <thread>
 #include "DataManager.h"
 #include "Utils.h"
+#include <iostream>
 
 
 DataManager* DataManager::instance = nullptr;
 std::map<int, Feature *> DataManager::featuremap = std::map<int, Feature*>();
 std::vector<std::vector<int>> DataManager::loainfo = std::vector<std::vector<int>>();
+std::map<int, std::thread::id> DataManager::threadmap = std::map<int, std::thread::id>();
 
 
 DataManager * DataManager::getInstance(){
@@ -63,6 +65,7 @@ void DataManager::initFeatrue(){
 	auto it = DataManager::instance->featuremap.begin();
 	for (it; it != DataManager::instance->featuremap.end(); it++){
 		std::thread td1(std::bind(&Feature::mainloop, &(*(it->second))));
+		DataManager::threadmap.insert(std::pair<int, std::thread::id>(it->second->id, td1.get_id()));
 		td1.detach();
 	}
 
@@ -95,12 +98,21 @@ std::vector<std::vector<int>> DataManager::getFeatureDataVecByType(int type){
 		temp.clear();
 		temp.push_back(f->id);
 		temp.push_back(f->type);
-		temp.push_back(f->x-Utils::sqr_l/2);
-		temp.push_back(f->y + Utils::sqr_l / 2);
-		temp.push_back(f->x + Utils::sqr_l / 2);
-		temp.push_back(f->y - Utils::sqr_l / 1);
+		temp.push_back(f->x);
+		temp.push_back(f->y);
+		temp.push_back(f->x + Utils::sqr_l);
+		temp.push_back(f->y + Utils::sqr_l);
 		DataManager::loainfo.push_back(temp);
 		it++;
 	}
 	return loainfo;
+}
+
+std::thread::id DataManager::getFeatureThreadId(int fid){
+
+	auto ftd=DataManager::threadmap.find(fid);
+	if (ftd != DataManager::threadmap.end()){
+		return ftd->second;
+	}
+	return std::thread::id();
 }

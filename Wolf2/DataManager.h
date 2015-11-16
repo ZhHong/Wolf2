@@ -3,6 +3,7 @@
 
 #include<map>
 #include<vector>
+#include <thread>
 #include "Feature.h"
 #include "Animal.h"
 #include "Wolf.h"
@@ -24,6 +25,7 @@ public:
 	void featureCallHelp(Feature *);
 	void featureCallTogether(Feature *);
 	void featureEat(Feature *);
+	std::thread::id getFeatureThreadId(int id);
 	std::vector<std::vector<int>>getFeatureDataVecByType(int type);
 private:
 	DataManager();
@@ -33,6 +35,8 @@ private:
 	static std::map<int, Feature*> featuremap;
 
 	static std::vector<std::vector<int>> loainfo;
+
+	static std::map<int, std::thread::id> threadmap;
 
 };
 #endif
