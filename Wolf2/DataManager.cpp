@@ -8,7 +8,7 @@ DataManager* DataManager::instance = nullptr;
 std::map<int, Feature *> DataManager::featuremap = std::map<int, Feature*>();
 std::vector<std::vector<int>> DataManager::loainfo = std::vector<std::vector<int>>();
 std::map<int, std::thread::id> DataManager::threadmap = std::map<int, std::thread::id>();
-
+int checkAction(int f_type1, int f_type2, float distance);
 
 DataManager * DataManager::getInstance(){
 	if (DataManager::instance = nullptr){
@@ -102,6 +102,7 @@ std::vector<std::vector<int>> DataManager::getFeatureDataVecByType(int type){
 		temp.push_back(f->y);
 		temp.push_back(f->x + Utils::sqr_l);
 		temp.push_back(f->y + Utils::sqr_l);
+		temp.push_back(f->state); //state 1 run/alive 0 die 2 hunte 3 runaway 4 call helip 5 call danger
 		DataManager::loainfo.push_back(temp);
 		it++;
 	}
@@ -115,4 +116,43 @@ std::thread::id DataManager::getFeatureThreadId(int fid){
 		return ftd->second;
 	}
 	return std::thread::id();
+}
+
+void DataManager::checkDistance(Feature *f){
+	int x = f->x;
+	int y = f->y;
+	auto it = DataManager::featuremap.begin();
+	while (it!=DataManager::featuremap.end())
+	{
+		if (it->second->id !=f->id && f->type!=1){
+			//remove self
+			//get 2 obj type,id,pointer
+			//dis=sqrt(pow(x1-x2,2)+pow(y1-y2,2))
+			float dis = 0; sqrt(pow(f->x - it->second->x, 2) + pow(f->y - it->second->y, 2));
+			int state = checkAction(f->type, it->second->type, dis);
+			if (state !=1){
+				//not normal state
+			}
+			else{
+				//set normal state
+			}
+		}
+	}
+}
+
+//check action to all
+int checkAction(int f_type1,int f_type2,float distance){
+	int state = 0;
+	switch (f_type1)
+	{
+	//rabbit
+	case 2:
+		break;
+	//wolf
+	case 3:
+		break;
+	default:
+		break;
+	}
+	return state;
 }

@@ -27,6 +27,8 @@ public:
 	void featureEat(Feature *);
 	std::thread::id getFeatureThreadId(int id);
 	std::vector<std::vector<int>>getFeatureDataVecByType(int type);
+
+	void checkDistance(Feature * f);
 private:
 	DataManager();
 	~DataManager();

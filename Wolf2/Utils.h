@@ -16,6 +16,7 @@ public:
 	static float wind_h;
 	static double random(int b,int e);
 	static double random();
+	static std::string getStateString(int state);
 };
 #endif
 

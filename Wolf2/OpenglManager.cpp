@@ -1,4 +1,3 @@
-#include <math.h>
 #include "OpenglManager.h"
 #include "Utils.h"
 #include "DataManager.h"
@@ -34,7 +33,7 @@ int OpenglManager::initOpenglState(int argc, char * argv[]){
 	glutCreateWindow("Wolf2");
 	glutDisplayFunc(RenderScene);
 	glutReshapeFunc(ChangeSize);
-	glutTimerFunc(1,TimerFunction,1);
+	glutTimerFunc(10,TimerFunction,1);
 	SetupRC();
 	glutMainLoop();
 	return 1;
@@ -57,29 +56,29 @@ void RenderScene(void){
 		//glRectf(-Utils::sqr_l, Utils::sqr_l, Utils::sqr_l, -Utils::sqr_l);
 		//glRectf(-1.0f,1.0f,1.0f,-1.0f);
 		auto cc = *it;
-		//Utils::print("============================");
-		//Utils::print(cc[1]);
-		//Utils::print(cc[2]);
-		//Utils::print(cc[3]);
-		//Utils::print(cc[4]);
-		//Utils::print(cc[5]);
+		std::string type_str = "";
 		if (cc[1] == 1){
 			glColor3f(0.0f, 1.0f, 0.0f);
+			type_str = "carrot";
 		}
 		if (cc[1] == 2){
 			glColor3f(0.0f, 0.0f, 1.0f);
+			type_str = "rabbit";
 		}
 		if (cc[1] == 3){
 			glColor3f(1.0f, 0.0f, 0.0f);
+			type_str = "wolf";
 		}
 		glRectf(cc[2],cc[3],cc[2],cc[5]);
 		//opengl draw numbers===== need number like-> id(x1,y1)
 		float globel_x = (cc[2] + cc[4]) / 2;
 		float globel_y = (cc[3] + cc[5]) / 2;
+		int state = cc[6]; //state 1 run/alive 0 die 2 hunte 3 runaway 4 call helip 5 call danger
+		std::string state_str=Utils::getStateString(state);
 		//std::thread::id tid=datamanager->getFeatureThreadId(cc[0]);
 		//std::string threadstr="0x " + std::to_string(tid.hash());
 		//std::string needdraw = threadstr+"-"+std::to_string(cc[0]) + "-(" +std::to_string(int(globel_x))+","+std::to_string(int(globel_y))+ ")";
-		std::string needdraw = "(" + std::to_string(int(globel_x)) + "," + std::to_string(int(globel_y)) + ")";
+		std::string needdraw = type_str+":"+state_str+":(" + std::to_string(int(globel_x)) + "," + std::to_string(int(globel_y)) + ")";
 		int len = needdraw.length();
 		glRasterPos3f(globel_x-len/2, globel_y + Utils::sqr_l , 0);
 		for (int i = 0; i != len; i++){
@@ -103,7 +102,7 @@ void ChangeSize(GLsizei w, GLsizei h){
 	
 	GLfloat aspectRadio;
 	if (h == 0)
-		h == 1;
+		h = 1;
 	//set viewport to window dimensiions
 	glViewport(0, 0, w, h);
 
@@ -137,5 +136,5 @@ std::vector<std::vector<int>>getData(int type){
 
 void TimerFunction(int value){
 	glutPostRedisplay();
-	glutTimerFunc(1, TimerFunction, 1);
+	glutTimerFunc(10, TimerFunction, 1);
 }

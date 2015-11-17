@@ -46,3 +46,32 @@ double Utils::random(int b, int e){
 	
 	return (b + (e - b)*rand() / (RAND_MAX + 1.0));
 }
+
+std::string Utils::getStateString(int state){
+	//state 1 run/alive 0 die 2 hunte 3 runaway 4 call helip 5 call danger
+	std::string temp = "";
+	switch (state)
+	{
+	case 0:
+		temp = "die";
+		break;
+	case 1:
+		temp = "move";
+		break;
+	case 2:
+		temp = "hunt";
+		break;
+	case 3:
+		temp = "escape";
+		break;
+	case 4:
+		temp = "food";
+		break;
+	case 5:
+		temp = "danger";
+		break;
+	default:
+		break;
+	}
+	return temp;
+}

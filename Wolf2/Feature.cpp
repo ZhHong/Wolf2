@@ -22,6 +22,9 @@ Feature::Feature()
 Feature::~Feature()
 {
 }
+//two way to send msg/recivemsg
+//1 send msg to all
+//2 manager send msg
 void Feature::sendMsgToObj(Feature f, cmdinfo msg){
 	f.reviceMsg(f, msg);
 }
@@ -76,8 +79,8 @@ void Feature::mainloop(){
 void Feature::move(){
 
 	//todo add do not run out of window
-	float tempx = Feature::x + int(cos(Feature::angel)*Feature::speed);
-	float tempy = Feature::y + int(sin(Feature::angel)*Feature::speed);
+	float tempx =float(Feature::x + int(cos(Feature::angel)*Feature::speed));
+	float tempy =float(Feature::y + int(sin(Feature::angel)*Feature::speed));
 
 	//x
 	if (tempx<=0){
@@ -99,21 +102,15 @@ void Feature::move(){
 		Feature::x = 0;
 	}
 	if (Feature::x > Utils::wind_w){
-		Feature::x = Utils::wind_w;
+		Feature::x = int(Utils::wind_w);
 	}
 	Feature::y += int(sin(Feature::angel)*Feature::speed);
 	if (Feature::y<0){
 		Feature::y = 0;
 	}
 	if (Feature::y > Utils::wind_h){
-		Feature::y = Utils::wind_h;
+		Feature::y = int(Utils::wind_h);
 	}
-	//Utils::print(Feature::x);
-	//Utils::print(Feature::y);
-	//Utils::print("featue type <" + std::to_string(Feature::type) + "> feature id <" + std::to_string(Feature::id) + "> move------------------------");
-	//std::vector<std::string> vec;
-	//srand((int)time(0));
-	//Utils::print(vec[int(random(5))]);
 }
 
 void Feature::run(){
