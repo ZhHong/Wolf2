@@ -10,6 +10,7 @@ std::vector<std::vector<int>>getData(int type);
 OpenglManager * OpenglManager::instance = nullptr;
 std::vector<std::vector<int>> tempvec;
 
+
 OpenglManager::OpenglManager()
 {
 }

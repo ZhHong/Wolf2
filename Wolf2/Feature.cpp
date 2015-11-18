@@ -7,7 +7,7 @@
 #include "DataManager.h"
 #include "World.h"
 
-#define random(x) (rand()%x)
+//#define random(x) (rand()%x)
 Feature::Feature()
 {
 	World* worldin = World::getInstance();
@@ -41,6 +41,46 @@ void Feature::checkMsgBox(){
 		Utils::print(it->modelId);
 		Utils::print(it->data);
 	}
+	//Feature::move();
+	if (Feature::type==1){
+		return;
+	}
+	//auto datamanager = DataManager::getInstance();
+
+	////get datamanager clock
+	//while (!datamanager->getLock())
+	//{
+	//	std::chrono::milliseconds timespan(10);
+	//	std::this_thread::sleep_for(timespan);
+	//}
+	//
+
+	//datamanager->checkDistance(this);
+
+	////refree datamanager clock
+	//datamanager->refreelock();
+	
+	Feature::state =int( Utils::random(0,3));
+
+	//state  0 die  1 run/alive 2 hunte call food 3 runaway call danger
+	switch (Feature::state)
+	{
+	case 0:
+		break;
+	case 1:
+		Feature::move();
+		break;
+	case 2:
+		Feature::run();
+		Feature::callTogether();
+		break;
+	case 3:
+		Feature::run();
+		Feature::callHelp();
+		break;
+	default:
+		break;
+	}
 }
 
 void Feature::mainloop(){
@@ -51,7 +91,6 @@ void Feature::mainloop(){
 			Feature::current_time = now;
 			//std::cout << Animal::id <<"wait for cmd" << std::endl;
 			Feature::checkMsgBox();
-			Feature::move();
 		}
 		//sleep thread 
 		std::chrono::milliseconds timespan(10);
@@ -114,8 +153,39 @@ void Feature::move(){
 }
 
 void Feature::run(){
-	Feature::x += 2*int(cos(Feature::angel));
-	Feature::y += 2*int(sin(Feature::angel));
+	//todo add do not run out of window
+	float tempx = float(Feature::x + int(cos(Feature::angel)*Feature::speed*2));
+	float tempy = float(Feature::y + int(sin(Feature::angel)*Feature::speed*2));
+
+	//x
+	if (tempx <= 0) {
+		Feature::angel = 180 - Feature::angel;
+	}
+	if (tempx >= Utils::wind_w) {
+		Feature::angel = 180 - Feature::angel;
+	}
+	//y
+	if (tempy < 0) {
+		Feature::angel = -angel;
+	}
+	if (tempy >= Utils::wind_h) {
+		Feature::angel = -angel;
+	}
+
+	Feature::x += int(cos(Feature::angel)*Feature::speed*2);
+	if (Feature::x<0) {
+		Feature::x = 0;
+	}
+	if (Feature::x > Utils::wind_w) {
+		Feature::x = int(Utils::wind_w);
+	}
+	Feature::y += int(sin(Feature::angel)*Feature::speed*2);
+	if (Feature::y<0) {
+		Feature::y = 0;
+	}
+	if (Feature::y > Utils::wind_h) {
+		Feature::y = int(Utils::wind_h);
+	};
 }
 
 void Feature::eat(){

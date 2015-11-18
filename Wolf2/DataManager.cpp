@@ -9,6 +9,8 @@ std::map<int, Feature *> DataManager::featuremap = std::map<int, Feature*>();
 std::vector<std::vector<int>> DataManager::loainfo = std::vector<std::vector<int>>();
 std::map<int, std::thread::id> DataManager::threadmap = std::map<int, std::thread::id>();
 int checkAction(int f_type1, int f_type2, float distance);
+int DataManager::datainit = 0;
+int DataManager::datalock = 0;
 
 DataManager * DataManager::getInstance(){
 	if (DataManager::instance = nullptr){
@@ -70,6 +72,7 @@ void DataManager::initFeatrue(){
 	}
 
 	Utils::print("DataManager::init data over====================");
+	DataManager::datainit = 1;
 }
 
 void DataManager::featureCallHelp(Feature *f){
@@ -102,7 +105,7 @@ std::vector<std::vector<int>> DataManager::getFeatureDataVecByType(int type){
 		temp.push_back(f->y);
 		temp.push_back(f->x + Utils::sqr_l);
 		temp.push_back(f->y + Utils::sqr_l);
-		temp.push_back(f->state); //state 1 run/alive 0 die 2 hunte 3 runaway 4 call helip 5 call danger
+		temp.push_back(f->state); //state  0 die  1 run/alive 2 hunte call food 3 runaway call danger
 		DataManager::loainfo.push_back(temp);
 		it++;
 	}
@@ -119,6 +122,11 @@ std::thread::id DataManager::getFeatureThreadId(int fid){
 }
 
 void DataManager::checkDistance(Feature *f){
+	if (!DataManager::datainit) {
+		return;
+	}
+	
+	Utils::print(std::to_string(f->id)+"feature check state=======================");
 	int x = f->x;
 	int y = f->y;
 	auto it = DataManager::featuremap.begin();
@@ -128,31 +136,63 @@ void DataManager::checkDistance(Feature *f){
 			//remove self
 			//get 2 obj type,id,pointer
 			//dis=sqrt(pow(x1-x2,2)+pow(y1-y2,2))
-			float dis = 0; sqrt(pow(f->x - it->second->x, 2) + pow(f->y - it->second->y, 2));
+			float dis = sqrt(pow(f->x - it->second->x, 2) + pow(f->y - it->second->y, 2));
 			int state = checkAction(f->type, it->second->type, dis);
 			if (state !=1){
 				//not normal state
+				f->state = state;
 			}
 			else{
 				//set normal state
+				if (f->state!=1) {
+					f->state = 1;
+				}
 			}
 		}
 	}
 }
 
 //check action to all
+//state  0 die  1 run/alive 2 hunte call food 3 runaway call danger
 int checkAction(int f_type1,int f_type2,float distance){
-	int state = 0;
+	int state = 1;
+	if (distance>Utils::sqr_l) {
+		return state;
+	}
 	switch (f_type1)
 	{
 	//rabbit
 	case 2:
+		//grass
+		if (f_type2==1) {
+			state = 2;
+		}
+		//wolf
+		if (f_type2==3) {
+			state = 3;
+		}
 		break;
 	//wolf
 	case 3:
+		if (f_type2==2) {
+			state = 2;
+		}
 		break;
 	default:
 		break;
 	}
 	return state;
+}
+
+bool DataManager::getLock() {
+	if (DataManager::datalock!=0) {
+		DataManager::datalock = 1;
+		return true;
+	}
+	return false;
+}
+
+void DataManager::refreelock() {
+
+	DataManager::datalock = 0;
 }

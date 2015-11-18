@@ -29,6 +29,8 @@ public:
 	std::vector<std::vector<int>>getFeatureDataVecByType(int type);
 
 	void checkDistance(Feature * f);
+	bool getLock();
+	void refreelock();
 private:
 	DataManager();
 	~DataManager();
@@ -40,5 +42,8 @@ private:
 
 	static std::map<int, std::thread::id> threadmap;
 
+	static int datainit;
+
+	static int datalock;
 };
 #endif
